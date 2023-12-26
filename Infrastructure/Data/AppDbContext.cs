@@ -1,4 +1,5 @@
 using IronMaidenRegistry.Domain.Entities;
+using IronMaidenRegistry.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace IronMaidenRegistry.Infrastructure.Data;
@@ -15,4 +16,11 @@ public class AppDbContext : DbContext
     public DbSet<Song> Songs { get; set; }
     public DbSet<MemberSong> MembersSongs { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new InstrumentConfiguration());
+        modelBuilder.ApplyConfiguration(new MemberConfiguration());
+        modelBuilder.ApplyConfiguration(new MemberSongConfiguration());
+        modelBuilder.ApplyConfiguration(new SongConfiguration());
+    }
 }

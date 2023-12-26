@@ -4,5 +4,6 @@ public class MemberSong
 {
     public Guid MemberId { get; set; }
     public Member Member { get; set; } = null!;
-    public List<MemberSong>? MembersSongs { get; set; }
+    public Guid SongId { get; set; }
+    public Song Song { get; set; } = null!;
 }

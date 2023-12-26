@@ -33,7 +33,7 @@ public class InstrumentRepository : IInstrumentRepository
 
         try
         {
-            var instruments = _dbContext
+            var instruments = await _dbContext
                 .Database
                 .SqlQueryRaw<InstrumentResult>("""
                                                 SELECT InstrumentId AS Id,
@@ -41,7 +41,7 @@ public class InstrumentRepository : IInstrumentRepository
                                                 FROM Instruments;                    
                                                 """)
                                                 .AsNoTracking()
-                                                .ToList();
+                                                .ToListAsync();
 
             var instrumentsMapped = new List<InstrumentResult>();
 

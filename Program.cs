@@ -1,4 +1,6 @@
 using IronMaidenRegistry.Infrastructure.Data;
+using IronMaidenRegistry.Infrastructure.Repositories;
+using IronMaidenRegistry.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
 );
+
+// Interfaces and Repositories
+builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 
 var app = builder.Build();
 

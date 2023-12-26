@@ -22,6 +22,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.FullName)
             .HasColumnType("VARCHAR")
             .HasColumnName("FullName")
+            .HasMaxLength(50)
             .IsRequired();
 
         builder.Property(m => m.BirthDate)

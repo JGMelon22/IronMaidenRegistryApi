@@ -28,5 +28,10 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
             .HasColumnType("DATE")
             .HasColumnName("BirthDate")
             .IsRequired();
+
+        // Foreign Keys
+        builder.HasOne(m => m.Instrument)
+            .WithMany(i => i.Members)
+            .HasForeignKey(m => m.InstrumentId);
     }
 }

@@ -42,6 +42,9 @@ public class InstrumentRepository : IInstrumentRepository
                                                 """)
                                                 .AsNoTracking()
                                                 .ToListAsync();
+                                            
+            if(instruments is null)
+                throw new Exception($"Instruments list is empty!");
 
             var instrumentsMapped = new List<InstrumentResult>();
 
@@ -55,6 +58,8 @@ public class InstrumentRepository : IInstrumentRepository
 
                 instrumentsMapped.Add(instrumentResult);
             }
+
+            
 
             serviceResponse.Data = instrumentsMapped;
         }
@@ -75,6 +80,10 @@ public class InstrumentRepository : IInstrumentRepository
         try
         {
             var instrument = await GetById(_dbContext, id);
+
+            if(instrument is null)
+                throw new Exception($"Instrument with id {id} not found!");
+
             serviceResponse.Data = instrument;
         }
 

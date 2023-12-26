@@ -1,0 +1,6 @@
+@IronMaidenRegistry_HostAddress = http://localhost:5200
+
+GET {{IronMaidenRegistry_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

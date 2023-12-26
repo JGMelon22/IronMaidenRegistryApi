@@ -1,3 +1,7 @@
 namespace IronMaidenRegistry.DTOs.Member;
 
-public record MemberInput(string FullName, DateOnly BirthDate);
+public record MemberInput(
+    string FullName,
+    DateOnly BirthDate,
+    Guid InstrumentId
+);

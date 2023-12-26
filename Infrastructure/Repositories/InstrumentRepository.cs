@@ -21,6 +21,12 @@ public class InstrumentRepository : IInstrumentRepository
                 .FirstOrDefault(i => i.Id == id));
 
     private readonly AppDbContext _dbContext;
+
+    public InstrumentRepository(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
     public async Task<ServiceResponse<List<InstrumentResult>>> GetAllInstrumentsAsync()
     {
         var serviceResponse = new ServiceResponse<List<InstrumentResult>>();

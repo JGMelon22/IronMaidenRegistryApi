@@ -16,6 +16,7 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 
 // Interfaces and Repositories
 builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 var app = builder.Build();
 

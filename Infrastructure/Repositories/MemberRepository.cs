@@ -31,7 +31,7 @@ public class MemberRepository : IMemberRepository
             var members = await _dbContext
                 .Database
                 .SqlQueryRaw<MemberResult>("""
-                                            SELECT MemberId AS MemberId,
+                                            SELECT MemberId AS Id,
                                                    FullName AS FullName,
                                                    BirthDate AS BirthDate
                                             FROM Members;

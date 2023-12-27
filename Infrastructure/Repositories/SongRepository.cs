@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using IronMaidenRegistry.DTOs.Song;
 
 namespace IronMaidenRegistry.Infrastructure.Repositories;
@@ -30,12 +29,18 @@ public class SongRepository : ISongRepository
 
         try
         {
-            var song = new Song()
+            var song = new Song
             {
                 Name = newSong.Name,
                 DurationInMinutes = newSong.DurationInMinutes,
-                AverageScore = newSong.AverageScore
+                AverageScore = newSong.AverageScore,
+                MembersSongs = newSong.MembersSongs.Select(memberSongInput => new MemberSong
+                {
+                    MemberId = memberSongInput.MemberId
+                }).ToList()
             };
+
+            await _dbContext.MembersSongs.AddRangeAsync(song.MembersSongs);
 
             await _dbContext.Songs.AddAsync(song);
             await _dbContext.SaveChangesAsync();
@@ -119,7 +124,7 @@ public class SongRepository : ISongRepository
             if (song is null)
                 throw new Exception($"Song with id {id} not found!");
 
-            return serviceResponse;
+            serviceResponse.Data = song;
         }
 
         catch (Exception ex)

@@ -1,6 +1,4 @@
-using IronMaidenRegistry.Domain.Entities;
 using IronMaidenRegistry.Infrastructure.Configuration;
-using Microsoft.EntityFrameworkCore;
 
 namespace IronMaidenRegistry.Infrastructure.Data;
 

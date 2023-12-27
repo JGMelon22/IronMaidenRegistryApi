@@ -1,8 +1,4 @@
-using IronMaidenRegistry.Domain.Entities;
 using IronMaidenRegistry.DTOs.Instrument;
-using IronMaidenRegistry.Infrastructure.Data;
-using IronMaidenRegistry.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace IronMaidenRegistry.Infrastructure.Repositories;
 

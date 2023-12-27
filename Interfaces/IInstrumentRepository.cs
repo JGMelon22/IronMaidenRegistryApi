@@ -1,4 +1,3 @@
-using IronMaidenRegistry.Domain.Entities;
 using IronMaidenRegistry.DTOs.Instrument;
 
 namespace IronMaidenRegistry.Interfaces;

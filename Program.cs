@@ -1,7 +1,4 @@
-using IronMaidenRegistry.Infrastructure.Data;
 using IronMaidenRegistry.Infrastructure.Repositories;
-using IronMaidenRegistry.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,3 @@
-using IronMaidenRegistry.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-
 namespace IronMaidenRegistry.Controllers;
 
 [ApiController]

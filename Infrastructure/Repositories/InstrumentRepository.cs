@@ -23,6 +23,11 @@ public class InstrumentRepository : IInstrumentRepository
         _dbContext = dbContext;
     }
 
+    public Task<ServiceResponse<InstrumentResult>> AddInstrumentAsync(InstrumentInput newInstrument)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResponse<List<InstrumentResult>>> GetAllInstrumentsAsync()
     {
         var serviceResponse = new ServiceResponse<List<InstrumentResult>>();
@@ -90,5 +95,15 @@ public class InstrumentRepository : IInstrumentRepository
         }
 
         return serviceResponse;
+    }
+
+    public Task RemoveInstrumentAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput newInstrument)
+    {
+        throw new NotImplementedException();
     }
 }

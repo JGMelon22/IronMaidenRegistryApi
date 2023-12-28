@@ -22,6 +22,11 @@ public class MemberRepository : IMemberRepository
         _dbContext = dbContext;
     }
 
+    public Task<ServiceResponse<MemberResult>> AddMemberAsync(MemberInput newMember)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResponse<List<MemberResult>>> GetAllMembersAsync()
     {
         var serviceResponse = new ServiceResponse<List<MemberResult>>();
@@ -89,5 +94,15 @@ public class MemberRepository : IMemberRepository
         }
 
         return serviceResponse;
+    }
+
+    public Task RemoveMemberAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResponse<MemberResult>> UpdateMemberAsync(MemberInput updatedMember)
+    {
+        throw new NotImplementedException();
     }
 }

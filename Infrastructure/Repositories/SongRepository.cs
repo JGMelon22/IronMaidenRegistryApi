@@ -40,8 +40,6 @@ public class SongRepository : ISongRepository
                 }).ToList()
             };
 
-            await _dbContext.MembersSongs.AddRangeAsync(song.MembersSongs);
-
             await _dbContext.Songs.AddAsync(song);
             await _dbContext.SaveChangesAsync();
 

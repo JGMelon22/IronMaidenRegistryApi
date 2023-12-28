@@ -101,7 +101,7 @@ public class MemberRepository : IMemberRepository
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResponse<MemberResult>> UpdateMemberAsync(MemberInput updatedMember)
+    public Task<ServiceResponse<MemberResult>> UpdateMemberAsync(Guid id, MemberInput updatedMember)
     {
         throw new NotImplementedException();
     }

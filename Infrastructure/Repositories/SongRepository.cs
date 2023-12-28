@@ -133,4 +133,14 @@ public class SongRepository : ISongRepository
 
         return serviceResponse;
     }
+
+    public Task RemoveSongAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResponse<SongResult>> UpdateSongAsync(Guid id, SongInput updatedSong)
+    {
+        throw new NotImplementedException();
+    }
 }

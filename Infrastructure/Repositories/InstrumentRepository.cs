@@ -23,9 +23,35 @@ public class InstrumentRepository : IInstrumentRepository
         _dbContext = dbContext;
     }
 
-    public Task<ServiceResponse<InstrumentResult>> AddInstrumentAsync(InstrumentInput newInstrument)
+    public async Task<ServiceResponse<InstrumentResult>> AddInstrumentAsync(InstrumentInput newInstrument)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<InstrumentResult>();
+
+        try
+        {
+            var instrument = new Instrument()
+            {
+                Name = newInstrument.Name
+            };
+
+            await _dbContext.SaveChangesAsync();
+
+            var instrumentResult = new InstrumentResult()
+            {
+                Id = instrument.Id,
+                Name = instrument.Name
+            };
+
+            serviceResponse.Data = instrumentResult;
+        }
+
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<List<InstrumentResult>>> GetAllInstrumentsAsync()
@@ -43,8 +69,8 @@ public class InstrumentRepository : IInstrumentRepository
                                                 """)
                                                 .AsNoTracking()
                                                 .ToListAsync();
-                                            
-            if(instruments is null)
+
+            if (instruments is null)
                 throw new Exception($"Instruments list is empty!");
 
             var instrumentsMapped = new List<InstrumentResult>();
@@ -60,7 +86,7 @@ public class InstrumentRepository : IInstrumentRepository
                 instrumentsMapped.Add(instrumentResult);
             }
 
-            
+
 
             serviceResponse.Data = instrumentsMapped;
         }
@@ -82,7 +108,7 @@ public class InstrumentRepository : IInstrumentRepository
         {
             var instrument = await GetById(_dbContext, id);
 
-            if(instrument is null)
+            if (instrument is null)
                 throw new Exception($"Instrument with id {id} not found!");
 
             serviceResponse.Data = instrument;
@@ -97,9 +123,26 @@ public class InstrumentRepository : IInstrumentRepository
         return serviceResponse;
     }
 
-    public Task RemoveInstrumentAsync(Guid id)
+    public async Task RemoveInstrumentAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<bool>();
+
+        try
+        {
+            var instrument = await _dbContext.Instruments.FindAsync(id);
+
+            if (instrument is null)
+                throw new Exception($"Instrument with id {id} not found!");
+
+            _dbContext.Remove(instrument);
+            await _dbContext.SaveChangesAsync();
+
+        }
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
     }
 
     public Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput newInstrument)

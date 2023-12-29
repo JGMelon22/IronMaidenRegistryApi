@@ -96,9 +96,26 @@ public class MemberRepository : IMemberRepository
         return serviceResponse;
     }
 
-    public Task RemoveMemberAsync(Guid id)
+    public async Task RemoveMemberAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<bool>();
+
+        try
+        {
+            var member = await _dbContext.Members.FindAsync(id);
+
+            if (member is null)
+                throw new Exception($"Member with id {id} not found!");
+
+            _dbContext.Remove(member);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
     }
 
     public Task<ServiceResponse<MemberResult>> UpdateMemberAsync(Guid id, MemberInput updatedMember)

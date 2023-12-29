@@ -1,4 +1,5 @@
 using IronMaidenRegistry.Infrastructure.Configuration;
+using IronMaidenRegistry.Infrastructure.Configuration.Seeding;
 
 namespace IronMaidenRegistry.Infrastructure.Data;
 
@@ -20,5 +21,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MemberConfiguration());
         modelBuilder.ApplyConfiguration(new MemberSongConfiguration());
         modelBuilder.ApplyConfiguration(new SongConfiguration());
+
+        InitialSeeding.Seed(modelBuilder);
     }
 }

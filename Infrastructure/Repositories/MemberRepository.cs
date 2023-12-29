@@ -22,9 +22,39 @@ public class MemberRepository : IMemberRepository
         _dbContext = dbContext;
     }
 
-    public Task<ServiceResponse<MemberResult>> AddMemberAsync(MemberInput newMember)
+    public async Task<ServiceResponse<MemberResult>> AddMemberAsync(MemberInput newMember)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<MemberResult>();
+
+        try
+        {
+            var member = new Member()
+            {
+                FullName = newMember.FullName,
+                BirthDate = newMember.BirthDate,
+                InstrumentId = newMember.InstrumentId
+            };
+
+            await _dbContext.SaveChangesAsync();
+
+            var memberResult = new MemberResult()
+            {
+                Id = member.Id,
+                FullName = member.FullName,
+                BirthDate = member.BirthDate
+                // InstrumentId = member.InstrumentId
+            };
+
+            serviceResponse.Data = memberResult;
+        }
+
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<List<MemberResult>>> GetAllMembersAsync()
@@ -118,8 +148,39 @@ public class MemberRepository : IMemberRepository
         }
     }
 
-    public Task<ServiceResponse<MemberResult>> UpdateMemberAsync(Guid id, MemberInput updatedMember)
+    public async Task<ServiceResponse<MemberResult>> UpdateMemberAsync(Guid id, MemberInput updatedMember)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<MemberResult>();
+
+        try
+        {
+            var member = await _dbContext.Members.FindAsync(id);
+
+            if (member is null)
+                throw new Exception($"Member with id {id} not found!");
+
+            member.FullName = updatedMember.FullName;
+            member.BirthDate = updatedMember.BirthDate;
+            member.InstrumentId = updatedMember.InstrumentId;
+
+            await _dbContext.SaveChangesAsync();
+
+            var memberResult = new MemberResult()
+            {
+                Id = member.Id,
+                FullName = member.FullName,
+                BirthDate = member.BirthDate
+                // InstrumentId = member.InstrumentId
+            };
+
+            serviceResponse.Data = memberResult;
+        }
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
+
+        return serviceResponse;
     }
 }

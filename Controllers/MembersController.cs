@@ -1,3 +1,5 @@
+using IronMaidenRegistry.DTOs.Member;
+
 namespace IronMaidenRegistry.Controllers;
 
 [ApiController]
@@ -28,5 +30,32 @@ public class MembersController : ControllerBase
         return member.Data != null
             ? Ok(member)
             : NotFound();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddMemberAsync(MemberInput newMember)
+    {
+        var member = await _repository.AddMemberAsync(newMember);
+        return member.Data != null
+            ? Ok(member)
+            : BadRequest(member);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateMemberAsync(Guid id, MemberInput updatedMember)
+    {
+        var member = await _repository.UpdateMemberAsync(id, updatedMember);
+        return member.Data != null
+            ? Ok(member)
+            : NotFound(member);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveMemberAsync(Guid id)
+    {
+        var member = await _repository.RemoveMemberAsync(id);
+        return member.Success != false
+            ? NoContent()
+            : BadRequest(member);
     }
 }

@@ -8,5 +8,5 @@ public interface IMemberRepository
     Task<ServiceResponse<MemberResult>> GetMemberByIdAsync(Guid id);
     Task<ServiceResponse<MemberResult>> AddMemberAsync(MemberInput newMember);
     Task<ServiceResponse<MemberResult>> UpdateMemberAsync(Guid id, MemberInput updatedMember);
-    Task RemoveMemberAsync(Guid id);
+    Task<ServiceResponse<bool>> RemoveMemberAsync(Guid id);
 }

@@ -134,7 +134,7 @@ public class SongRepository : ISongRepository
         return serviceResponse;
     }
 
-    public async Task RemoveSongAsync(Guid id)
+    public async Task<ServiceResponse<bool>> RemoveSongAsync(Guid id)
     {
         var serviceResponse = new ServiceResponse<bool>();
 
@@ -154,6 +154,8 @@ public class SongRepository : ISongRepository
             serviceResponse.Message = ex.Message;
             serviceResponse.Success = false;
         }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<SongResult>> UpdateSongAsync(Guid id, SongInput updatedSong)

@@ -126,7 +126,7 @@ public class MemberRepository : IMemberRepository
         return serviceResponse;
     }
 
-    public async Task RemoveMemberAsync(Guid id)
+    public async Task<ServiceResponse<bool>> RemoveMemberAsync(Guid id)
     {
         var serviceResponse = new ServiceResponse<bool>();
 
@@ -146,6 +146,8 @@ public class MemberRepository : IMemberRepository
             serviceResponse.Message = ex.Message;
             serviceResponse.Success = false;
         }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<MemberResult>> UpdateMemberAsync(Guid id, MemberInput updatedMember)

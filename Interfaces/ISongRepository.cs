@@ -8,5 +8,5 @@ public interface ISongRepository
     Task<ServiceResponse<SongResult>> GetSongByIdAsync(Guid id);
     Task<ServiceResponse<SongResult>> AddSongAsync(SongInput newSong);
     Task<ServiceResponse<SongResult>> UpdateSongAsync(Guid id, SongInput updatedSong);
-    Task RemoveSongAsync(Guid id);
+    Task<ServiceResponse<bool>> RemoveSongAsync(Guid id);
 }

@@ -134,13 +134,54 @@ public class SongRepository : ISongRepository
         return serviceResponse;
     }
 
-    public Task RemoveSongAsync(Guid id)
+    public async Task RemoveSongAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<bool>();
+
+        try
+        {
+            var song = await _dbContext.Songs.FindAsync(id);
+
+            if (song is null)
+                throw new Exception($"Song with id {id} not found!");
+
+            _dbContext.Songs.Remove(song);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
     }
 
-    public Task<ServiceResponse<SongResult>> UpdateSongAsync(Guid id, SongInput updatedSong)
+    public async Task<ServiceResponse<SongResult>> UpdateSongAsync(Guid id, SongInput updatedSong)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<SongResult>();
+
+        try
+        {
+            var song = await _dbContext.Songs.FindAsync(id);
+
+            if (song is null)
+                throw new Exception($"Song with id {id} not found!");
+
+            song.Name = updatedSong.Name;
+            song.DurationInMinutes = updatedSong.DurationInMinutes;
+            song.AverageScore = updatedSong.AverageScore;
+            song.MembersSongs = updatedSong.MembersSongs.Select(memberSongInput => new MemberSong()
+            {
+                MemberId = memberSongInput.MemberId
+            }).ToList();
+        }
+
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
+
+        return serviceResponse;
     }
 }

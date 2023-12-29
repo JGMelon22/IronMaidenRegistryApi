@@ -145,8 +145,36 @@ public class InstrumentRepository : IInstrumentRepository
         }
     }
 
-    public Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput newInstrument)
+    public async Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput updatedInstrument)
     {
-        throw new NotImplementedException();
+        var serviceResponse = new ServiceResponse<InstrumentResult>();
+
+        try
+        {
+            var instrument = await _dbContext.Instruments.FindAsync(id);
+
+            if (instrument is null)
+                throw new Exception($"Instrument with id {id} not found!");
+
+            instrument.Name = updatedInstrument.Name;
+
+            await _dbContext.SaveChangesAsync();
+
+            var instrumentResult = new InstrumentResult()
+            {
+                Id = instrument.Id,
+                Name = instrument.Name
+            };
+
+            serviceResponse.Data = instrumentResult;
+
+        }
+        catch (Exception ex)
+        {
+            serviceResponse.Message = ex.Message;
+            serviceResponse.Success = false;
+        }
+
+        return serviceResponse;
     }
 }

@@ -1,3 +1,5 @@
+using IronMaidenRegistry.DTOs.Instrument;
+
 namespace IronMaidenRegistry.Controllers;
 
 [ApiController]
@@ -26,5 +28,32 @@ public class InstrumentsController : ControllerBase
         return instrument.Data != null
             ? Ok(instrument)
             : NotFound(instrument);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddInstrumentAsync(InstrumentInput newInstrument)
+    {
+        var instrument = await _repository.AddInstrumentAsync(newInstrument);
+        return instrument.Data != null
+            ? Ok(instrument)
+            : BadRequest(instrument);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateInstrumentAsync(Guid id, InstrumentInput updatedInstrument)
+    {
+        var instrument = await _repository.UpdateInstrumentAsync(id, updatedInstrument);
+        return instrument.Data != null
+            ? Ok(instrument)
+            : BadRequest(instrument);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveInstrumentAsync(Guid id)
+    {
+        var instrument = await _repository.RemoveInstrumentAsync(id);
+        return instrument.Success != false
+            ? NoContent()
+            : BadRequest(instrument);
     }
 }

@@ -8,5 +8,5 @@ public interface IInstrumentRepository
     Task<ServiceResponse<InstrumentResult>> GetInstrumentByIdAsync(Guid id);
     Task<ServiceResponse<InstrumentResult>> AddInstrumentAsync(InstrumentInput newInstrument);
     Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput updatedInstrument);
-    Task RemoveInstrumentAsync(Guid id);
+    Task<ServiceResponse<bool>> RemoveInstrumentAsync(Guid id);
 }

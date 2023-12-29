@@ -123,7 +123,7 @@ public class InstrumentRepository : IInstrumentRepository
         return serviceResponse;
     }
 
-    public async Task RemoveInstrumentAsync(Guid id)
+    public async Task<ServiceResponse<bool>> RemoveInstrumentAsync(Guid id)
     {
         var serviceResponse = new ServiceResponse<bool>();
 
@@ -143,6 +143,8 @@ public class InstrumentRepository : IInstrumentRepository
             serviceResponse.Message = ex.Message;
             serviceResponse.Success = false;
         }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput updatedInstrument)

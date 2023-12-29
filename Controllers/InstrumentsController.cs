@@ -54,6 +54,6 @@ public class InstrumentsController : ControllerBase
         var instrument = await _repository.RemoveInstrumentAsync(id);
         return instrument.Success != false
             ? NoContent()
-            : BadRequest(instrument);
+            : NotFound(instrument);
     }
 }

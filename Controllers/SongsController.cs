@@ -38,4 +38,22 @@ public class SongsController : ControllerBase
             ? Ok(song)
             : NoContent();
     }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateSongAsync(Guid id, SongInput updatedSong)
+    {
+        var song = await _repository.UpdateSongAsync(id, updatedSong);
+        return song.Data != null
+            ? Ok(song)
+            : BadRequest(song);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveSongAsync(Guid id)
+    {
+        var song = await _repository.RemoveSongAsync(id);
+        return song.Success != false
+            ? NoContent()
+            : NotFound(song);
+    }
 }

@@ -9,6 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Cors
+builder.Services.AddCors();
+
 // DbContext
 builder.Services.AddDbContextPool<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
@@ -20,6 +23,14 @@ builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<ISongRepository, SongRepository>();
 
 var app = builder.Build();
+
+// Adding Cors
+app.UseCors(c =>
+{
+    c.WithOrigins("http://localhost:5173/");
+    c.AllowAnyHeader();
+    c.WithMethods("GET");
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

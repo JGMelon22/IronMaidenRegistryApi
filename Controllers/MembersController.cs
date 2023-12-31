@@ -23,7 +23,7 @@ public class MembersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAllMembersAsync(Guid id)
+    public async Task<IActionResult> GetMemberByIdAsync(Guid id)
     {
         var member = await _repository.GetMemberByIdAsync(id);
 

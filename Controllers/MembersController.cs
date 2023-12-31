@@ -7,6 +7,7 @@ namespace IronMaidenRegistry.Controllers;
 public class MembersController : ControllerBase
 {
     private readonly IMemberRepository _repository;
+
     public MembersController(IMemberRepository repository)
     {
         _repository = repository;
@@ -54,7 +55,7 @@ public class MembersController : ControllerBase
     public async Task<IActionResult> RemoveMemberAsync(Guid id)
     {
         var member = await _repository.RemoveMemberAsync(id);
-        return member.Success != false
+        return member.Success
             ? NoContent()
             : BadRequest(member);
     }

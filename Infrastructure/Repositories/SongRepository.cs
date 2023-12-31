@@ -4,19 +4,19 @@ namespace IronMaidenRegistry.Infrastructure.Repositories;
 
 public class SongRepository : ISongRepository
 {
+    private readonly AppDbContext _dbContext;
+
     private readonly Func<AppDbContext, Guid, Task<SongResult?>> GetById =
         EF.CompileAsyncQuery((AppDbContext context, Guid id) =>
             context.Songs.Select(s => new SongResult
-            {
-                Id = s.Id,
-                Name = s.Name,
-                DurationInMinutes = s.DurationInMinutes,
-                AverageScore = s.AverageScore
-            })
-            .AsNoTracking()
-            .FirstOrDefault(s => s.Id == id));
-
-    private readonly AppDbContext _dbContext;
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    DurationInMinutes = s.DurationInMinutes,
+                    AverageScore = s.AverageScore
+                })
+                .AsNoTracking()
+                .FirstOrDefault(s => s.Id == id));
 
     public SongRepository(AppDbContext dbContext)
     {
@@ -43,7 +43,7 @@ public class SongRepository : ISongRepository
             await _dbContext.Songs.AddAsync(song);
             await _dbContext.SaveChangesAsync();
 
-            var songResult = new SongResult()
+            var songResult = new SongResult
             {
                 Id = song.Id,
                 Name = song.Name,
@@ -70,15 +70,15 @@ public class SongRepository : ISongRepository
         {
             var songs = await _dbContext
                 .Database
-                .SqlQueryRaw<SongResult>(""" 
-                                          SELECT SongId AS Id,
-                                                 SongName AS Name,
-                                                 DurationInMinutes AS DurationInMinutes,
-                                                 AverageScore AS AverageScore
-                                          FROM Songs;
-                                          """)
-                                         .AsNoTracking()
-                                         .ToListAsync();
+                .SqlQueryRaw<SongResult>("""
+                                         SELECT SongId AS Id,
+                                                SongName AS Name,
+                                                DurationInMinutes AS DurationInMinutes,
+                                                AverageScore AS AverageScore
+                                         FROM Songs;
+                                         """)
+                .AsNoTracking()
+                .ToListAsync();
 
             if (songs is null)
                 throw new Exception("Song list is empty!");
@@ -87,7 +87,7 @@ public class SongRepository : ISongRepository
 
             foreach (var song in songs)
             {
-                var songResult = new SongResult()
+                var songResult = new SongResult
                 {
                     Id = song.Id,
                     Name = song.Name,
@@ -99,7 +99,6 @@ public class SongRepository : ISongRepository
             }
 
             serviceResponse.Data = songMapped;
-
         }
 
         catch (Exception ex)
@@ -172,7 +171,7 @@ public class SongRepository : ISongRepository
             song.Name = updatedSong.Name;
             song.DurationInMinutes = updatedSong.DurationInMinutes;
             song.AverageScore = updatedSong.AverageScore;
-            song.MembersSongs = updatedSong.MembersSongs.Select(memberSongInput => new MemberSong()
+            song.MembersSongs = updatedSong.MembersSongs.Select(memberSongInput => new MemberSong
             {
                 MemberId = memberSongInput.MemberId
             }).ToList();

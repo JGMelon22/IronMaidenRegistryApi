@@ -7,6 +7,7 @@ namespace IronMaidenRegistry.Controllers;
 public class InstrumentsController : ControllerBase
 {
     private readonly IInstrumentRepository _repository;
+
     public InstrumentsController(IInstrumentRepository repository)
     {
         _repository = repository;
@@ -52,7 +53,7 @@ public class InstrumentsController : ControllerBase
     public async Task<IActionResult> RemoveInstrumentAsync(Guid id)
     {
         var instrument = await _repository.RemoveInstrumentAsync(id);
-        return instrument.Success != false
+        return instrument.Success
             ? NoContent()
             : NotFound(instrument);
     }

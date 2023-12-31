@@ -1,7 +1,9 @@
 # Iron Maiden - Registry
+
 A Web API project to create, read, update and delete basic information's from the best band ever.
 
 <h2>Tools</h2>
+
 - .NET 8<br/>
 - SQL Server 2022<br/>
 
@@ -17,6 +19,7 @@ A Web API project to create, read, update and delete basic information's from th
 </div>
 
 <h2>NuGet Packages</h2>
+
 - Microsoft.EntityFrameworkCore<br/>
 - Microsoft.EntityFrameworkCore.Design<br/>
 - Microsoft.EntityFrameworkCore.SqlServer<br/>

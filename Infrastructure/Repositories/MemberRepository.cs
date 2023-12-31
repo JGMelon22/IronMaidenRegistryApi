@@ -4,19 +4,19 @@ namespace IronMaidenRegistry.Infrastructure.Repositories;
 
 public class MemberRepository : IMemberRepository
 {
+    private readonly AppDbContext _dbContext;
+
     private readonly Func<AppDbContext, Guid, Task<MemberResult?>> GetById =
         EF.CompileAsyncQuery((AppDbContext context, Guid id) =>
-
             context.Members.Select(m => new MemberResult
-            {
-                Id = m.Id,
-                FullName = m.FullName,
-                BirthDate = m.BirthDate
-            })
-            .AsNoTracking()
-            .FirstOrDefault(i => i.Id == id));
+                {
+                    Id = m.Id,
+                    FullName = m.FullName,
+                    BirthDate = m.BirthDate
+                })
+                .AsNoTracking()
+                .FirstOrDefault(i => i.Id == id));
 
-    private readonly AppDbContext _dbContext;
     public MemberRepository(AppDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -28,7 +28,7 @@ public class MemberRepository : IMemberRepository
 
         try
         {
-            var member = new Member()
+            var member = new Member
             {
                 FullName = newMember.FullName,
                 BirthDate = newMember.BirthDate,
@@ -37,7 +37,7 @@ public class MemberRepository : IMemberRepository
 
             await _dbContext.SaveChangesAsync();
 
-            var memberResult = new MemberResult()
+            var memberResult = new MemberResult
             {
                 Id = member.Id,
                 FullName = member.FullName,
@@ -66,13 +66,13 @@ public class MemberRepository : IMemberRepository
             var members = await _dbContext
                 .Database
                 .SqlQueryRaw<MemberResult>("""
-                                            SELECT MemberId AS Id,
-                                                   FullName AS FullName,
-                                                   BirthDate AS BirthDate
-                                            FROM Members;
-                                            """)
-                                            .AsNoTracking()
-                                            .ToListAsync();
+                                           SELECT MemberId AS Id,
+                                                  FullName AS FullName,
+                                                  BirthDate AS BirthDate
+                                           FROM Members;
+                                           """)
+                .AsNoTracking()
+                .ToListAsync();
 
             if (members is null)
                 throw new Exception("Members list is empty!");
@@ -81,7 +81,7 @@ public class MemberRepository : IMemberRepository
 
             foreach (var member in members)
             {
-                var memberResult = new MemberResult()
+                var memberResult = new MemberResult
                 {
                     Id = member.Id,
                     FullName = member.FullName,
@@ -167,7 +167,7 @@ public class MemberRepository : IMemberRepository
 
             await _dbContext.SaveChangesAsync();
 
-            var memberResult = new MemberResult()
+            var memberResult = new MemberResult
             {
                 Id = member.Id,
                 FullName = member.FullName,

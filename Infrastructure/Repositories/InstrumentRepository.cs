@@ -4,9 +4,10 @@ namespace IronMaidenRegistry.Infrastructure.Repositories;
 
 public class InstrumentRepository : IInstrumentRepository
 {
+    private readonly AppDbContext _dbContext;
+
     private readonly Func<AppDbContext, Guid, Task<InstrumentResult?>> GetById =
         EF.CompileAsyncQuery((AppDbContext context, Guid id) =>
-
             context.Instruments
                 .Select(i => new InstrumentResult
                 {
@@ -15,8 +16,6 @@ public class InstrumentRepository : IInstrumentRepository
                 })
                 .AsNoTracking()
                 .FirstOrDefault(i => i.Id == id));
-
-    private readonly AppDbContext _dbContext;
 
     public InstrumentRepository(AppDbContext dbContext)
     {
@@ -29,14 +28,14 @@ public class InstrumentRepository : IInstrumentRepository
 
         try
         {
-            var instrument = new Instrument()
+            var instrument = new Instrument
             {
                 Name = newInstrument.Name
             };
 
             await _dbContext.SaveChangesAsync();
 
-            var instrumentResult = new InstrumentResult()
+            var instrumentResult = new InstrumentResult
             {
                 Id = instrument.Id,
                 Name = instrument.Name
@@ -63,21 +62,21 @@ public class InstrumentRepository : IInstrumentRepository
             var instruments = await _dbContext
                 .Database
                 .SqlQueryRaw<InstrumentResult>("""
-                                                SELECT InstrumentId AS Id,
-                                                       InstrumentName AS Name
-                                                FROM Instruments;                    
-                                                """)
-                                                .AsNoTracking()
-                                                .ToListAsync();
+                                               SELECT InstrumentId AS Id,
+                                                      InstrumentName AS Name
+                                               FROM Instruments;
+                                               """)
+                .AsNoTracking()
+                .ToListAsync();
 
             if (instruments is null)
-                throw new Exception($"Instruments list is empty!");
+                throw new Exception("Instruments list is empty!");
 
             var instrumentsMapped = new List<InstrumentResult>();
 
             foreach (var instrument in instruments)
             {
-                var instrumentResult = new InstrumentResult()
+                var instrumentResult = new InstrumentResult
                 {
                     Id = instrument.Id,
                     Name = instrument.Name
@@ -85,7 +84,6 @@ public class InstrumentRepository : IInstrumentRepository
 
                 instrumentsMapped.Add(instrumentResult);
             }
-
 
 
             serviceResponse.Data = instrumentsMapped;
@@ -98,7 +96,6 @@ public class InstrumentRepository : IInstrumentRepository
         }
 
         return serviceResponse;
-
     }
 
     public async Task<ServiceResponse<InstrumentResult>> GetInstrumentByIdAsync(Guid id)
@@ -136,7 +133,6 @@ public class InstrumentRepository : IInstrumentRepository
 
             _dbContext.Remove(instrument);
             await _dbContext.SaveChangesAsync();
-
         }
         catch (Exception ex)
         {
@@ -147,7 +143,8 @@ public class InstrumentRepository : IInstrumentRepository
         return serviceResponse;
     }
 
-    public async Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id, InstrumentInput updatedInstrument)
+    public async Task<ServiceResponse<InstrumentResult>> UpdateInstrumentAsync(Guid id,
+        InstrumentInput updatedInstrument)
     {
         var serviceResponse = new ServiceResponse<InstrumentResult>();
 
@@ -162,14 +159,13 @@ public class InstrumentRepository : IInstrumentRepository
 
             await _dbContext.SaveChangesAsync();
 
-            var instrumentResult = new InstrumentResult()
+            var instrumentResult = new InstrumentResult
             {
                 Id = instrument.Id,
                 Name = instrument.Name
             };
 
             serviceResponse.Data = instrumentResult;
-
         }
         catch (Exception ex)
         {

@@ -7,6 +7,7 @@ namespace IronMaidenRegistry.Controllers;
 public class SongsController : ControllerBase
 {
     private readonly ISongRepository _repository;
+
     public SongsController(ISongRepository repository)
     {
         _repository = repository;
@@ -52,7 +53,7 @@ public class SongsController : ControllerBase
     public async Task<IActionResult> RemoveSongAsync(Guid id)
     {
         var song = await _repository.RemoveSongAsync(id);
-        return song.Success != false
+        return song.Success
             ? NoContent()
             : NotFound(song);
     }

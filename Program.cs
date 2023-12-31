@@ -27,7 +27,7 @@ var app = builder.Build();
 // Adding Cors
 app.UseCors(c =>
 {
-    c.WithOrigins("http://localhost:5173/");
+    c.WithOrigins("http://localhost:5173");
     c.AllowAnyHeader();
     c.WithMethods("GET");
 });

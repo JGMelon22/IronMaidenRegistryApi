@@ -5,38 +5,38 @@ public static class InitialSeeding
     public static void Seed(ModelBuilder modelBuilder)
     {
         // Instrument
-        Instrument bass = new Instrument()
+        var bass = new Instrument
         {
             Id = Guid.NewGuid(),
             Name = "Bass"
         };
 
-        Instrument drum = new Instrument()
+        var drum = new Instrument
         {
             Id = Guid.NewGuid(),
             Name = "Drum"
         };
 
-        Instrument guitar = new Instrument()
+        var guitar = new Instrument
         {
             Id = Guid.NewGuid(),
             Name = "Guitar"
         };
 
-        Instrument keyboard = new Instrument()
+        var keyboard = new Instrument
         {
             Id = Guid.NewGuid(),
             Name = "Keyboard"
         };
 
-        Instrument vocals = new Instrument()
+        var vocals = new Instrument
         {
             Id = Guid.NewGuid(),
             Name = "Vocals"
         };
 
         // Member
-        Member adrian = new Member()
+        var adrian = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Adrian Smith",
@@ -44,7 +44,7 @@ public static class InitialSeeding
             InstrumentId = guitar.Id
         };
 
-        Member blaze = new Member()
+        var blaze = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Blaze Bayley",
@@ -52,7 +52,7 @@ public static class InitialSeeding
             InstrumentId = vocals.Id
         };
 
-        Member bruce = new Member()
+        var bruce = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Bruce Dickson",
@@ -60,7 +60,7 @@ public static class InitialSeeding
             InstrumentId = vocals.Id
         };
 
-        Member clive = new Member()
+        var clive = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Clive Burr",
@@ -68,7 +68,7 @@ public static class InitialSeeding
             InstrumentId = drum.Id
         };
 
-        Member dave = new Member()
+        var dave = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Dave Murray",
@@ -76,7 +76,7 @@ public static class InitialSeeding
             InstrumentId = guitar.Id
         };
 
-        Member denis = new Member()
+        var denis = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Denis Stratton",
@@ -84,7 +84,7 @@ public static class InitialSeeding
             InstrumentId = guitar.Id
         };
 
-        Member janick = new Member()
+        var janick = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Janick Gers",
@@ -92,7 +92,7 @@ public static class InitialSeeding
             InstrumentId = guitar.Id
         };
 
-        Member nicko = new Member()
+        var nicko = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Nicko McBrain",
@@ -100,7 +100,7 @@ public static class InitialSeeding
             InstrumentId = drum.Id
         };
 
-        Member paul = new Member()
+        var paul = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Paul Di'Anno",
@@ -108,7 +108,7 @@ public static class InitialSeeding
             InstrumentId = vocals.Id
         };
 
-        Member steve = new Member()
+        var steve = new Member
         {
             Id = Guid.NewGuid(),
             FullName = "Steve Harris",
@@ -117,7 +117,7 @@ public static class InitialSeeding
         };
 
         // Song
-        Song forTheGreaterGoodOfGod = new Song()
+        var forTheGreaterGoodOfGod = new Song
         {
             Id = Guid.NewGuid(),
             Name = "For the Greater Good of God",
@@ -125,7 +125,7 @@ public static class InitialSeeding
             AverageScore = 4
         };
 
-        Song fearOfTheDark = new Song()
+        var fearOfTheDark = new Song
         {
             Id = Guid.NewGuid(),
             Name = "Fear of the Dark",
@@ -133,7 +133,7 @@ public static class InitialSeeding
             AverageScore = 4
         };
 
-        Song prowler = new Song()
+        var prowler = new Song
         {
             Id = Guid.NewGuid(),
             Name = "Prowler",
@@ -141,7 +141,7 @@ public static class InitialSeeding
             AverageScore = 5
         };
 
-        Song theTrooper = new Song()
+        var theTrooper = new Song
         {
             Id = Guid.NewGuid(),
             Name = "The Trooper",
@@ -150,7 +150,7 @@ public static class InitialSeeding
         };
 
         // // MemberSong
-        MemberSong bruceFearOfTheDark = new MemberSong()
+        var bruceFearOfTheDark = new MemberSong
         {
             MemberId = bruce.Id,
             SongId = fearOfTheDark.Id

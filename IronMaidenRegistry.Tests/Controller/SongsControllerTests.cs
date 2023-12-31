@@ -1,5 +1,3 @@
-using FakeItEasy;
-using FluentAssertions;
 using IronMaidenRegistry.Controllers;
 using IronMaidenRegistry.Domain.Entities;
 using IronMaidenRegistry.DTOs.Song;
@@ -10,8 +8,8 @@ namespace IronMaidenRegistry.Tests.Controller;
 
 public class SongsControllerTests
 {
-    private readonly SongsController _songsController;
     private readonly ISongRepository _songRepository;
+    private readonly SongsController _songsController;
 
     public SongsControllerTests()
     {
@@ -39,7 +37,7 @@ public class SongsControllerTests
     public void SongsController_GetSongByIdAsync_ReturnsSongs()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var songResult = A.Fake<ServiceResponse<SongResult>>();
         A.CallTo(() => _songRepository.GetSongByIdAsync(id)).Returns(songResult);
 
@@ -71,7 +69,7 @@ public class SongsControllerTests
     public void SongsController_UpdateSongAsync_ReturnsSong()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var updatedSong = A.Fake<SongInput>();
         var songResult = A.Fake<ServiceResponse<SongResult>>();
         A.CallTo(() => _songRepository.UpdateSongAsync(id, updatedSong)).Returns(songResult);
@@ -88,7 +86,7 @@ public class SongsControllerTests
     public void SongsController_RemoveSongAsync_ReturnsSuccess()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var success = A.Fake<ServiceResponse<bool>>();
         A.CallTo(() => _songRepository.RemoveSongAsync(id)).Returns(success);
 

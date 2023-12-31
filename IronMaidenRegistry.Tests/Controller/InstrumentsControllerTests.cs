@@ -1,5 +1,3 @@
-using FakeItEasy;
-using FluentAssertions;
 using IronMaidenRegistry.Controllers;
 using IronMaidenRegistry.Domain.Entities;
 using IronMaidenRegistry.DTOs.Instrument;
@@ -10,8 +8,8 @@ namespace IronMaidenRegistry.Tests.Controller;
 
 public class InstrumentsControllerTests
 {
-    private readonly InstrumentsController _instrumentsController;
     private readonly IInstrumentRepository _instrumentRepository;
+    private readonly InstrumentsController _instrumentsController;
 
     public InstrumentsControllerTests()
     {
@@ -40,7 +38,7 @@ public class InstrumentsControllerTests
     public void InstrumentsController_GetInstrumentByIdAsync_ReturnsInstrument()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var instrument = A.Fake<ServiceResponse<InstrumentResult>>();
         A.CallTo(() => _instrumentRepository.GetInstrumentByIdAsync(id)).Returns(instrument);
 
@@ -72,7 +70,7 @@ public class InstrumentsControllerTests
     public void InstrumentsController_UpdateInstrumentAsync_ReturnsInstrument()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var updatedInstrument = A.Fake<InstrumentInput>();
         var instrumentResult = A.Fake<ServiceResponse<InstrumentResult>>();
         A.CallTo(() => _instrumentRepository.UpdateInstrumentAsync(id, updatedInstrument)).Returns(instrumentResult);
@@ -89,7 +87,7 @@ public class InstrumentsControllerTests
     public void InstrumentsController_RemoveInstrumentAsync_ReturnsSuccess()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var success = A.Fake<ServiceResponse<bool>>();
         A.CallTo(() => _instrumentRepository.RemoveInstrumentAsync(id)).Returns(success);
 

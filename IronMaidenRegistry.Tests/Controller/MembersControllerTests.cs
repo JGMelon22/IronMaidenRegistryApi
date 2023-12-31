@@ -1,5 +1,3 @@
-using FakeItEasy;
-using FluentAssertions;
 using IronMaidenRegistry.Controllers;
 using IronMaidenRegistry.Domain.Entities;
 using IronMaidenRegistry.DTOs.Member;
@@ -10,8 +8,8 @@ namespace IronMaidenRegistry.Tests.Controller;
 
 public class MembersControllerTests
 {
-    private readonly MembersController _membersController;
     private readonly IMemberRepository _memberRepository;
+    private readonly MembersController _membersController;
 
     public MembersControllerTests()
     {
@@ -40,7 +38,7 @@ public class MembersControllerTests
     public void MembersController_GetMemberByIdAsync_ReturnsMembers()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var member = A.Fake<ServiceResponse<MemberResult>>();
         A.CallTo(() => _memberRepository.GetMemberByIdAsync(id)).Returns(member);
 
@@ -72,7 +70,7 @@ public class MembersControllerTests
     public void MembersController_UpdateMemberAsync_ReturnsMembers()
     {
         // Arrange 
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var updatedMember = A.Fake<MemberInput>();
         var memberResult = A.Fake<ServiceResponse<MemberResult>>();
         A.CallTo(() => _memberRepository.AddMemberAsync(updatedMember)).Returns(memberResult);
@@ -89,7 +87,7 @@ public class MembersControllerTests
     public void MembersController_RemoveMemberAsync_ReturnsMembers()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var success = A.Fake<ServiceResponse<bool>>();
         A.CallTo(() => _memberRepository.RemoveMemberAsync(id)).Returns(success);
 

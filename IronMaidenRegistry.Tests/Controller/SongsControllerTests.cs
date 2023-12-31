@@ -40,8 +40,8 @@ public class SongsControllerTests
     {
         // Arrange
         Guid id = Guid.NewGuid();
-        var song = A.Fake<ServiceResponse<SongResult>>();
-        A.CallTo(() => _songRepository.GetSongByIdAsync(id)).Returns(song);
+        var songResult = A.Fake<ServiceResponse<SongResult>>();
+        A.CallTo(() => _songRepository.GetSongByIdAsync(id)).Returns(songResult);
 
         // Act
         var result = _songsController.GetSongByIdAsync(id);

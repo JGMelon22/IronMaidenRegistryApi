@@ -84,8 +84,7 @@ public class InstrumentRepository : IInstrumentRepository
 
                 instrumentsMapped.Add(instrumentResult);
             }
-
-
+            
             serviceResponse.Data = instrumentsMapped;
         }
 

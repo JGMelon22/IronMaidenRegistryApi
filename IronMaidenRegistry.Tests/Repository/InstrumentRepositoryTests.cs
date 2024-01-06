@@ -14,25 +14,24 @@ public class InstrumentRepositoryTests
     public InstrumentRepositoryTests()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         _dbContext = new AppDbContext(options);
         _dbContext.Database.EnsureCreatedAsync();
 
         if (_dbContext.Instruments.Count() <= 0)
-        {
-            for (int i = 0; i < 10; i++)
+            
+            for (var i = 0; i < 10; i++)
             {
-                _dbContext.Instruments.Add(
-                    new Instrument()
+                _dbContext.Instruments.AddAsync(
+                    new Instrument
                     {
                         Name = "New Instrument Test"
                     });
 
                 _dbContext.SaveChangesAsync();
             }
-        }
 
         _instrumentRepository = new InstrumentRepository(_dbContext);
     }
@@ -68,7 +67,7 @@ public class InstrumentRepositoryTests
     public void InstrumentRepository_GetInstrumentByIdAsync_ReturnsInstrumentResult()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
 
         // Act
         var result = _instrumentRepository.GetInstrumentByIdAsync(id);
@@ -82,7 +81,7 @@ public class InstrumentRepositoryTests
     public void InstrumentRepository_RemoveInstrumentAsync_ReturnsSuccess()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
 
         // Act
         var result = _instrumentRepository.RemoveInstrumentAsync(id);
@@ -96,7 +95,7 @@ public class InstrumentRepositoryTests
     public void InstrumentRepository_UpdateInstrumentAsync_ReturnsInstrumentResult()
     {
         // Arrange
-        Guid id = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var instrumentInput = new InstrumentInput("Updated Instrument Test");
 
         // Act
